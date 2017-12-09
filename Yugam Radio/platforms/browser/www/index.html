@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+	<meta charset="utf-8">
+	<style type="text/css">
+
+		#playcontrols {
+			text-align: center;
+			margin-top: 50px;
+		}
+		#playcontrols #activityindicator, #playcontrols #stopbutton {
+			display: none;
+		}
+
+		#textpositiondiv {
+			margin-top: 100px;
+		}
+
+	</style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="cordova.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+  </head>
+  <body>
+
+    <ons-navigator swipeable id="myNavigator" page="home.html"></ons-navigator>
+
+    <template id="home.html">
+      <ons-page id="home">
+        <ons-toolbar>
+          <div class="center">Yugam Radio</div>
+        </ons-toolbar>
+
+        <!-- Home Page Contents -->
+        <div id="playcontrols">
+    		  <a href="#" id="playbutton" onClick="html5audio.play();return false;"><img src="img/playbutton.png" /></a>
+    		  <a href="#" id="activityindicator" onClick="html5audio.stop();return false;"><img src="img/activityindicator.gif" /></a>
+    		  <a href="#" id="stopbutton" onClick="html5audio.stop();return false;"><img src="img/stopbutton.png" /></a>
+  	    </div>
+        <div id="songInfoDiv">Current Song: <span id="songTitle"></span></div>
+        <div id="singerInfoDiv">Artist: <span id="singerInfo"></span></div>
+    	  <div id="textpositiondiv">Time played: <span id="textposition">stopped</span></div>
+        <!-- End Home Page Contents -->
+        <ons-button id="push-button">Push page</ons-button>
+      </ons-page>
+    </template>
+
+    <template id="shows.html">
+      <ons-page id="shows">
+        <ons-toolbar>
+          <div class="left"><ons-back-button>Yugam Radio</ons-back-button></div>
+          <div class="center"></div>
+        </ons-toolbar>
+        <p>This is the second page.</p>
+      </ons-page>
+    </template>
+
+	  <script type="text/javascript">
+		  playButton = document.getElementById('playbutton');
+		  stopButton = document.getElementById('stopbutton');
+		  activityIndicator = document.getElementById('activityindicator');
+		  textPosition = document.getElementById('textposition');
+	  </script>
+  </body>
+</html>
