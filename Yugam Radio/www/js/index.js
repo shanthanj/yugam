@@ -37,7 +37,7 @@ function onDeviceReady() {
 
 function getStreamStats() {
 	$.ajax({
-        url: "http://50.22.219.37:36626/statistics?json=1",
+        url: "http://yugam.dynu.net:8080/statistics?json=1",
         type: "GET",
         success: function(data) {
             //console.log("polling");
@@ -70,7 +70,7 @@ function pad2(number) {
 	return (number < 10 ? '0' : '') + number
 }
 
-var myaudioURL = 'http://50.22.219.37:36626/;';
+var myaudioURL = 'http://yugam.dynu.net:8080/;';
 var myaudio = new Audio(myaudioURL);
 var isPlaying = false;
 var readyStateInterval = null;
