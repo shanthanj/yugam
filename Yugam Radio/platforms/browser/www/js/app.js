@@ -1,34 +1,37 @@
-
-var progressTimer;
-
-var playButton;
-var stopButton;
-var activityIndicator;
-var textPosition;
-var shoutcastURL = "http://yugam.dynu.net:8080/";
-
-document.addEventListener("deviceready", onDeviceReady, false);
+// App logic.
+window.myApp = {};
 
 document.addEventListener('init', function(event) {
 
-	//initialize variables
-	playButton = document.getElementById('playbutton');
-	stopButton = document.getElementById('stopbutton');
-	activityIndicator = document.getElementById('activityindicator');
-	textPosition = document.getElementById('textposition');
 
-
+  //Initialize variables
+  playButton = document.getElementById('playbutton');
+  stopButton = document.getElementById('stopbutton');
+  activityIndicator = document.getElementById('activityindicator');
+  textPosition = document.getElementById('textposition');
 
   var page = event.target;
 
-  if (page.id === 'home') {
-    page.querySelector('#push-button').onclick = function() {
-      document.querySelector('#myNavigator').pushPage('shows.html', {data: {title: 'Shows'}});
-    };
-  } else if (page.id === 'shows') {
-    page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
+  // Each page calls its own initialization controller.
+  if (myApp.controllers.hasOwnProperty(page.id)) {
+    myApp.controllers[page.id](page);
+  }
+
+  // Fill the lists with initial data when the pages we need are ready.
+  // This only happens once at the beginning of the app.
+  if (page.id === 'menuPage' || page.id === 'pendingTasksPage') {
+    if (document.querySelector('#menuPage')
+      && document.querySelector('#pendingTasksPage')
+      && !document.querySelector('#pendingTasksPage ons-list-item')
+    ) {
+      myApp.services.fixtures.forEach(function(data) {
+        myApp.services.tasks.create(data);
+      });
+    }
   }
 });
+
+document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
 	html5audio.play();
@@ -38,7 +41,7 @@ function onDeviceReady() {
 
 function getStreamStats() {
 	$.ajax({
-        url: shoutcastURL + "statistics?json=1",
+        url: "http://50.22.219.37:36626/statistics?json=1",
         type: "GET",
         success: function(data) {
             //console.log("polling");
@@ -53,8 +56,6 @@ function getStreamStats() {
         timeout: 2000
     });
 }
-
-
 
 function onError(error)
 {
@@ -71,8 +72,8 @@ function pad2(number) {
 	return (number < 10 ? '0' : '') + number
 }
 
-
-var myaudio = new Audio(shoutcastURL);
+var myaudioURL = 'http://50.22.219.37:36626/;';
+var myaudio = new Audio(myaudioURL);
 var isPlaying = false;
 var readyStateInterval = null;
 
@@ -147,7 +148,7 @@ var html5audio = {
 		activityIndicator.style.display = 'none';
 		playButton.style.display = 'block';
 		myaudio = null;
-		myaudio = new Audio(shoutcastURL);
+		myaudio = new Audio(myaudioURL);
 		textPosition.innerHTML = '';
 	}
 };
