@@ -5,6 +5,7 @@ var playButton;
 var stopButton;
 var activityIndicator;
 var textPosition;
+var shoutcastURL = "http://yugam.dynu.net:8080/";
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -37,7 +38,7 @@ function onDeviceReady() {
 
 function getStreamStats() {
 	$.ajax({
-        url: "http://50.22.219.37:36626/statistics?json=1",
+        url: shoutcastURL + "statistics?json=1",
         type: "GET",
         success: function(data) {
             //console.log("polling");
@@ -70,8 +71,7 @@ function pad2(number) {
 	return (number < 10 ? '0' : '') + number
 }
 
-var myaudioURL = 'http://50.22.219.37:36626/;';
-var myaudio = new Audio(myaudioURL);
+var myaudio = new Audio(shoutcastURL);
 var isPlaying = false;
 var readyStateInterval = null;
 
@@ -146,7 +146,7 @@ var html5audio = {
 		activityIndicator.style.display = 'none';
 		playButton.style.display = 'block';
 		myaudio = null;
-		myaudio = new Audio(myaudioURL);
+		myaudio = new Audio(shoutcastURL);
 		textPosition.innerHTML = '';
 	}
 };
