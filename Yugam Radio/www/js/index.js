@@ -7,17 +7,26 @@ var activityIndicator;
 var textPosition;
 var shoutcastURL = "http://yugam.dynu.net:8080/";
 
+document.addEventListener("prechange", function(event) {
+  if (event.target.matches('#appTabbar')) {
+    event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
+  }
+});
+
 document.addEventListener("deviceready", onDeviceReady, false);
+
+/*ons.ready(function() {
+
+  onDeviceReady();
+});*/
 
 document.addEventListener('init', function(event) {
 
 	//initialize variables
-	playButton = document.getElementById('playbutton');
-	stopButton = document.getElementById('stopbutton');
-	activityIndicator = document.getElementById('activityindicator');
-	textPosition = document.getElementById('textposition');
-
-
+  playButton = document.getElementById('playbutton');
+  stopButton = document.getElementById('stopbutton');
+  activityIndicator = document.getElementById('activityindicator');
+  textPosition = document.getElementById('textposition');
 
   var page = event.target;
 
@@ -26,7 +35,13 @@ document.addEventListener('init', function(event) {
       document.querySelector('#myNavigator').pushPage('shows.html', {data: {title: 'Shows'}});
     };
   } else if (page.id === 'shows') {
-    page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
+    jQuery(function($) {
+          $("#rss-feeds").rss("http://www.adaderana.lk/rss.php",
+          {
+            limit: 10,
+            entryTemplate:'<ons-list-item><a href="{url}">[{author}@{date}] {title}</a><br/>{teaserImage}{shortBodyPlain}<ons-list-item>'
+          })
+        });
   }
 });
 
@@ -45,7 +60,7 @@ function getStreamStats() {
 						var songAndArtist = data.streams[0].songtitle;
 						var song = songAndArtist.split(" - ")[1];
 						var artist = songAndArtist.split(" - ")[0];
-						$('#songTitle').text(song);
+            $('#songTitle').text(song);
 						$('#singerInfo').text(artist);
         },
         dataType: "json",
@@ -71,8 +86,8 @@ function pad2(number) {
 	return (number < 10 ? '0' : '') + number
 }
 
-
-var myaudio = new Audio(shoutcastURL);
+var myAudioURL = shoutcastURL+";";
+var myaudio = new Audio(myAudioURL);
 var isPlaying = false;
 var readyStateInterval = null;
 
@@ -81,6 +96,7 @@ var html5audio = {
 	{
 		isPlaying = true;
 		myaudio.play();
+
 
 		readyStateInterval = setInterval(function(){
 			 if (myaudio.readyState <= 2) {
@@ -147,7 +163,30 @@ var html5audio = {
 		activityIndicator.style.display = 'none';
 		playButton.style.display = 'block';
 		myaudio = null;
-		myaudio = new Audio(shoutcastURL);
+		myaudio = new Audio(myAudioURL);
 		textPosition.innerHTML = '';
 	}
+};
+
+window.fn = {};
+
+window.fn.toggleMenu = function () {
+  document.getElementById('appSplitter').left.toggle();
+};
+
+window.fn.loadView = function (index) {
+  document.getElementById('appTabbar').setActiveTab(index);
+  document.getElementById('sidemenu').close();
+};
+
+window.fn.loadLink = function (url) {
+  window.open(url, '_blank');
+};
+
+window.fn.pushPage = function (page, anim) {
+  if (anim) {
+    document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title }, animation: anim });
+  } else {
+    document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title } });
+  }
 };

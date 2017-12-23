@@ -20,23 +20,29 @@
 		}
 
 	</style>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
   <script type="text/javascript" src="cordova.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
   <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+  <script src="js/jquery.rss.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/index.js"></script>
   </head>
   <body>
 
-    <ons-navigator swipeable id="myNavigator" page="home.html"></ons-navigator>
+  <!--  <ons-navigator swipeable id="myNavigator" page="home.html"></ons-navigator> -->
+    <ons-navigator id="myNavigator" swipeable swipe-target-width="80px">
+      <ons-page>
+        <ons-splitter id="appSplitter">
+          <ons-splitter-side id="sidemenu" page="sidemenu.html" side="left" collapse swipeable width="220px"></ons-splitter-side>
+          <ons-splitter-content page="tabbar.html"></ons-splitter-content>
+        </ons-splitter>
+      </ons-page>
+    </ons-navigator>
 
     <template id="home.html">
-      <ons-page id="home">
-        <ons-toolbar>
-          <div class="center">Yugam Radio</div>
-        </ons-toolbar>
-
+      <ons-page id="home" title="Yugam Radio">
         <!-- Home Page Contents -->
         <div id="playcontrols">
     		  <a href="#" id="playbutton" onClick="html5audio.play();return false;"><img src="img/playbutton.png" /></a>
@@ -52,20 +58,61 @@
     </template>
 
     <template id="shows.html">
-      <ons-page id="shows">
+      <ons-page id="shows" title="Shows">
         <ons-toolbar>
-          <div class="left"><ons-back-button>Yugam Radio</ons-back-button></div>
-          <div class="center"></div>
+          <div class="center">Yugam Radio Schedule</div>
         </ons-toolbar>
-        <p>This is the second page.</p>
+        <ons-list id="rss-feeds">
+          <ons-list-header>Default</ons-list-header>
+          <ons-list-item>Item A</ons-list-item>
+          <ons-list-item>Item B</ons-list-item>
+
+        </ons-list>
       </ons-page>
     </template>
 
-	  <script type="text/javascript">
-		  playButton = document.getElementById('playbutton');
-		  stopButton = document.getElementById('stopbutton');
-		  activityIndicator = document.getElementById('activityindicator');
-		  textPosition = document.getElementById('textposition');
-	  </script>
+    <template id="news.html">
+      <ons-page id="news">
+        <p>This is the news page.</p>
+      </ons-page>
+    </template>
+
+    <template id="tabbar.html">
+      <ons-page id="tabbar-page">
+        <ons-toolbar>
+          <div id="toolbarLabel" class="center">Yugam Radio</div>
+          <div class="left">
+            <ons-toolbar-button onclick="fn.toggleMenu()">
+              <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+        </ons-toolbar>
+        <ons-tabbar swipeable id="appTabbar" position="auto">
+          <ons-tab label="Home" icon="ion-home" page="home.html" active></ons-tab>
+          <ons-tab label="Shows" icon="ion-edit" page="shows.html"></ons-tab>
+          <ons-tab label="News" icon="ion-film-marker" page="news.html"></ons-tab>
+        </ons-tabbar>
+
+
+      </ons-page>
+    </template>
+
+    <template id="sidemenu.html">
+      <ons-page>
+        <ons-list>
+        <ons-list-item onclick="fn.load('home.html')" tappable>
+          Home
+        </ons-list-item>
+        <ons-list-item onclick="fn.load('settings.html')" tappable>
+          Settings
+        </ons-list-item>
+        <ons-list-item onclick="fn.load('about.html')" tappable>
+          About
+        </ons-list-item>
+      </ons-list>
+      </ons-page>
+    </template>
+
+
   </body>
 </html>
