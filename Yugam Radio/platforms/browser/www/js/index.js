@@ -47,8 +47,15 @@ document.addEventListener('init', function(event) {
 
 function onDeviceReady() {
 	html5audio.play();
+  initPushNotification();
 	getStreamStats();
 	return false;
+}
+
+function initPushNotification() {
+  var push = PushNotification.init({ "android": {"senderID": "AIzaSyB0aRdztZhiD8HxvzJL4fpnVcZ8EnPBoeU"},
+         "ios": {"alert": "true", "badge": "true", "sound": "true"}, "windows": {} } );
+  console.log("Push Notification Initialized");
 }
 
 function getStreamStats() {
