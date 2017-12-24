@@ -10,7 +10,17 @@
     "phonegap-plugin-push": {
       "FCM_VERSION": "11.0.1",
       "PACKAGE_NAME": "com.yugam.radio"
+    },
+    "cordova-plugin-local-notification": {
+      "PACKAGE_NAME": "com.yugam.radio"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.yugam.radio"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "com.yugam.radio"
+    }
+  }
 }

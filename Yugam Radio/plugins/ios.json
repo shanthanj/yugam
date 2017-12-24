@@ -1,0 +1,22 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-local-notification": {
+      "PACKAGE_NAME": "com.yugam.radio"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.yugam.radio"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "com.yugam.radio"
+    }
+  }
+}
